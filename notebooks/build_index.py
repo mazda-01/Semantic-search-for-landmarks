@@ -28,7 +28,7 @@ with torch.no_grad():
         image = Image.open(path).convert('RGB')
         inputs = processor(images=image, return_tensors='pt').to(device)
         emb = model.get_image_features(**inputs)
-        emb = emb / emb.norm(p=2, dim=-1, keepdim=True)  # Нормализация (важно для cosine)
+        emb = emb / emb.norm(p=2, dim=-1, keepdim=True)  
         embeddings.append(emb.cpu().numpy())
         paths.append(path)
 
@@ -37,7 +37,7 @@ print(f'Эмбеддинги готовы {embeddings.shape}')
 
 # Построение FAISS индекса (Inner Product = cosine similarity после нормализации)
 dim = embeddings.shape[1]
-index = faiss.IndexFlatIP(dim)  # Inner Product для cosine
+index = faiss.IndexFlatIP(dim)  
 index.add(embeddings)
 
 # Сохранение

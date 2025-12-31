@@ -68,7 +68,6 @@ st.markdown("Датасет: 1000+ фото знаменитых мест и п�
 
 tab1, tab2, tab3 = st.tabs(["🔍 Поиск по фото", "✍️ Поиск по тексту", "🏷️ Классификация"])
 
-# ================= TAB 1: Image → Image =================
 with tab1:
     st.header("Загрузи фото — найду похожие")
     uploaded_file = st.file_uploader("Выбери изображение", type=["jpg", "jpeg", "png"])
@@ -96,10 +95,9 @@ with tab1:
                     st.image(img)
                     st.caption(f"{i+1}. Score: {score:.3f}\n{os.path.basename(path)}")
 
-# ================= TAB 2: Text → Image =================
 with tab2:
     st.header("Напиши описание — найду фото")
-    text_query = st.text_input("Текст запроса", value="Эйфелева башня ночью")
+    text_query = st.text_input("Текст запроса", value="Eiffel Tower at night")
     
     if st.button("Найти по тексту") or text_query:
         with st.spinner("Ищу по описанию..."):
@@ -121,7 +119,6 @@ with tab2:
                     st.image(img)
                     st.caption(f"{i+1}. Score: {score:.3f}\n{os.path.basename(path)}")
 
-# ================= TAB 3: Zero-shot классификация =================
 with tab3:
     st.header("Загрузи фото — скажу, что это")
     uploaded_class = st.file_uploader("Фото для классификации", type=["jpg", "jpeg", "png"], key="class")
@@ -144,7 +141,6 @@ with tab3:
             st.success(f"**Предсказанный класс:** {predicted}")
             st.info(f"**Уверенность:** {confidence:.3f}")
 
-            # Топ-3 классов
             top3_vals, top3_idx = similarities.topk(3)
             st.write("Топ-3 возможных классов:")
             for i in range(3):
